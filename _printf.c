@@ -9,8 +9,8 @@
 int	_printf(const char *format, ...)
 {
 	va_list	args;
-	int		count;
-	int		i;
+	int count;
+	int i;
 
 	if (!format)
 		return (-1);
@@ -19,8 +19,10 @@ int	_printf(const char *format, ...)
 	i = 0;
 	while (format[i])
 	{
-		if (format[i] == '%' && format[i + 1])
+		if (format[i] == '%')
 		{
+			if (format[i + 1])
+			{
 			i++;
 			if (format[i] == 'c')
 				count += handle_char(args);
@@ -28,6 +30,7 @@ int	_printf(const char *format, ...)
 				count += handle_string(args);
 			else if (format[i] == '%')
 				count += handle_percent();
+			}
 		}
 		else
 			count += putchar_out(format[i]);
