@@ -21,8 +21,11 @@ int	_printf(const char *format, ...)
 	{
 		if (format[i] == '%')
 		{
-			if (format[i + 1])
+			if (!format[i + 1])
 			{
+				va_end(args);
+				return (-1);
+			}
 			i++;
 			if (format[i] == 'c')
 				count += handle_char(args);
@@ -30,7 +33,7 @@ int	_printf(const char *format, ...)
 				count += handle_string(args);
 			else if (format[i] == '%')
 				count += handle_percent();
-			}
+		
 		}
 		else
 			count += putchar_out(format[i]);
